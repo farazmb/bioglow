@@ -1,16 +1,632 @@
+
 ---
+const title = "BioGlow — Stylish Fonts, Bios & Username Generator";
+const description =
+  "Transform your text with stylish Unicode fonts, create aesthetic social media bios, generate usernames, and copy beautiful symbols for free.";
+
+const fontStyles = [
+  { id: "bold", name: "Bold", sample: "𝗦𝘁𝘆𝗹𝗶𝘀𝗵 𝗧𝗲𝘅𝘁", category: "Bold" },
+  { id: "italic", name: "Italic", sample: "𝘚𝘵𝘺𝘭𝘪𝘴𝘩 𝘛𝘦𝘹𝘵", category: "Italic" },
+  { id: "bolditalic", name: "Bold Italic", sample: "𝙎𝙩𝙮𝙡𝙞𝙨𝙝 𝙏𝙚𝙭𝙩", category: "Bold" },
+  { id: "script", name: "Cursive", sample: "𝒮𝓉𝓎𝓁𝒾𝓈𝒽 𝒯𝑒𝓍𝓉", category: "Cursive" },
+  { id: "boldscript", name: "Bold Cursive", sample: "𝓢𝓽𝔂𝓵𝓲𝓼𝓱 𝓣𝓮𝔁𝓽", category: "Cursive" },
+  { id: "gothic", name: "Gothic", sample: "𝔖𝔱𝔶𝔩𝔦𝔰𝔥 𝔗𝔢𝔵𝔱", category: "Gothic" },
+  { id: "boldgothic", name: "Bold Gothic", sample: "𝕾𝖙𝖞𝖑𝖎𝖘𝖍 𝕿𝖊𝖝𝖙", category: "Gothic" },
+  { id: "double", name: "Double Struck", sample: "𝕊𝕥𝕪𝕝𝕚𝕤𝕙 𝕋𝕖𝕩𝕥", category: "Fancy" },
+  { id: "mono", name: "Monospace", sample: "𝚂𝚝𝚢𝚕𝚒𝚜𝚑 𝚃𝚎𝚡𝚝", category: "Fancy" },
+  { id: "sans", name: "Sans Serif", sample: "𝖲𝗍𝗒𝗅𝗂𝗌𝗁 𝖳𝖾𝗑𝗍", category: "Fancy" },
+  { id: "sansbold", name: "Sans Bold", sample: "𝗦𝘁𝘆𝗹𝗶𝘀𝗵 𝗧𝗲𝘅𝘁", category: "Bold" },
+  { id: "sansitalic", name: "Sans Italic", sample: "𝘚𝘵𝘺𝘭𝘪𝘴𝘩 𝘛𝘦𝘹𝘵", category: "Italic" },
+  { id: "circled", name: "Circled", sample: "Ⓢⓣⓨⓛⓘⓢⓗ Ⓣⓔⓧⓣ", category: "Decorative" },
+  { id: "negative", name: "Negative Circled", sample: "🅢🅣🅨🅛🅘🅢🅗", category: "Decorative" },
+  { id: "squared", name: "Squared", sample: "🅂🅃🅈🄻🄸🅂🄷", category: "Decorative" },
+  { id: "smallcaps", name: "Small Caps", sample: "Sᴛʏʟɪsʜ Tᴇxᴛ", category: "Fancy" },
+  { id: "superscript", name: "Superscript", sample: "ˢᵗʸˡⁱˢʰ ᵀᵉˣᵗ", category: "Decorative" },
+  { id: "subscript", name: "Subscript", sample: "ₛₜᵧₗᵢₛₕ", category: "Decorative" },
+  { id: "fullwidth", name: "Full Width", sample: "Ｓｔｙｌｉｓｈ Ｔｅｘｔ", category: "Fancy" },
+  { id: "wide", name: "Spaced", sample: "S t y l i s h   T e x t", category: "Decorative" },
+  { id: "reverse", name: "Reverse", sample: "txeT hsilytS", category: "Fun" },
+  { id: "upside", name: "Upside Down", sample: "ʇxǝ⊥ ɥsᴉʎʇS", category: "Fun" },
+  { id: "underline", name: "Underline", sample: "S̲t̲y̲l̲i̲s̲h̲", category: "Decorative" },
+  { id: "strike", name: "Strikethrough", sample: "S̶t̶y̶l̶i̶s̶h̶", category: "Decorative" },
+  { id: "doubleline", name: "Double Underline", sample: "S̳t̳y̳l̳i̳s̳h̳", category: "Decorative" },
+  { id: "hearts", name: "Heart Decorated", sample: "♡ Stylish Text ♡", category: "Cute" },
+  { id: "stars", name: "Star Decorated", sample: "✦ Stylish Text ✦", category: "Cute" },
+  { id: "brackets", name: "Bracket Style", sample: "『 Stylish Text 』", category: "Decorative" },
+  { id: "bubble", name: "Bubble Letters", sample: "Ⓢⓣⓨⓛⓘⓢⓗ", category: "Cute" },
+  { id: "flower", name: "Flower Style", sample: "❀ Stylish Text ❀", category: "Cute" },
+  { id: "sparkle", name: "Sparkle Style", sample: "✧･ﾟ Stylish Text ﾟ･✧", category: "Cute" },
+  { id: "arrow", name: "Arrow Style", sample: "➳ Stylish Text ➳", category: "Decorative" },
+];
+
+const symbols = [
+  "♡", "♥", "ღ", "❥", "୨୧", "ꨄ", "ৎ୭", "✿", "❀", "❁",
+  "✧", "✦", "★", "☆", "⋆", "✩", "༄", "☾", "☽", "☼",
+  "𓆩♡𓆪", "୭", "ೃ", "༉", "⊹", "⟡", "∞", "𓂃", "꒰", "꒱",
+  "『", "』", "「", "」", "【", "】", "⸜", "⸝", "⌗", "⭒",
+  "➳", "➵", "→", "↠", "⇢", "↳", "⤷", "༺", "༻", "꧁",
+  "꧂", "⋆｡", "ﾟ☾", "𖹭", "☁", "୨", "ৎ", "⛧", "♱", "𖤐"
+];
+
+const bioTemplates = [
+  { vibe: "Aesthetic", text: "✧ creating my own sunshine ✧\n♡ living in little moments\n☾ dreamer by nature" },
+  { vibe: "Minimal", text: "less noise, more meaning.\ncreating my own path." },
+  { vibe: "Cute", text: "୨୧ just a little daydreamer\n♡ made of stardust & feelings\n✿ stay soft" },
+  { vibe: "Mysterious", text: "☾ somewhere between dreams & reality\n𓆩♡𓆪 not for everyone" },
+  { vibe: "Confident", text: "not here to fit in.\n✦ building my own universe." },
+  { vibe: "Romantic", text: "♡ collecting moments, not things\n☾ a heart full of poetry" },
+  { vibe: "Creator", text: "✦ creating • learning • growing\n📩 collaborations: DM" },
+  { vibe: "Funny", text: "professional overthinker\n☕ powered by caffeine & chaos" },
+];
+
+const usernameWords = [
+  "luna", "nova", "echo", "aura", "velvet", "cloud", "dream",
+  "moon", "rose", "cosmic", "blush", "star", "mist", "dusk",
+  "pixel", "honey", "angel", "frost", "lilac", "glow", "onyx",
+  "bloom", "muse", "soft", "wild", "zen", "orbit", "sol"
+];
 ---
 
+<!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#10091c" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="BioGlow home">
+        <span class="brand-icon">✳</span>
+        <span>bio<span class="brand-accent">glow</span><span class="brand-dot">.</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#fonts">Fonts</a>
+        <a href="#bio-generator">Bio Generator</a>
+        <a href="#usernames">Usernames</a>
+        <a href="#symbols">Symbols</a>
+      </nav>
+      <a class="nav-cta" href="#fonts">Explore tools <span>↗</span></a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="pulse-dot"></span> YOUR PROFILE, REIMAGINED</div>
+          <h1>Make your text<br />feel <span class="gradient-text">like you.</span></h1>
+          <p class="hero-description">Stylish fonts, aesthetic bios, unique usernames and tiny details that make your social profile unforgettable.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#fonts">Explore stylish fonts <span>↗</span></a>
+            <a class="button button-secondary" href="#bio-generator">Create a bio</a>
+          </div>
+          <div class="hero-trust"><span class="trust-icon">✦</span> Free to use <span class="trust-separator">·</span> No signup <span class="trust-separator">·</span> Copy in one click</div>
+        </div>
+
+        <div class="hero-visual" aria-label="Stylish profile preview">
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <div class="profile-card">
+            <div class="profile-cover">
+              <span class="cover-star star-one">✦</span>
+              <span class="cover-star star-two">✧</span>
+              <span class="cover-orb"></span>
+              <span class="cover-caption">YOUR LITTLE UNIVERSE</span>
+            </div>
+            <div class="profile-body">
+              <div class="avatar">✿</div>
+              <div class="profile-name">𝓎𝑜𝓊𝓇 𝓃𝒶𝓂𝑒 <span class="verified">✦</span></div>
+              <div class="profile-handle">@your.own.universe</div>
+              <p class="profile-bio">♡ making ordinary moments<br />feel a little magical ✧</p>
+              <div class="profile-stats"><div><strong>128</strong><span>posts</span></div><div><strong>2.4k</strong><span>followers</span></div><div><strong>384</strong><span>following</span></div></div>
+              <div class="profile-button">Follow ✦</div>
+            </div>
+          </div>
+          <div class="floating-note note-top"><span>✧</span> Your vibe, your rules</div>
+          <div class="floating-note note-bottom"><span>♡</span> Copy. Paste. Glow.</div>
+        </div>
+      </section>
+
+      <section class="ticker" aria-label="Available tools">
+        <span>✦ STYLISH FONTS</span><span>♡ AESTHETIC BIOS</span><span>✧ UNIQUE USERNAMES</span><span>☾ SYMBOL LIBRARY</span><span>✦ STYLISH FONTS</span>
+      </section>
+
+      <section class="section" id="fonts">
+        <div class="section-heading">
+          <div><div class="eyebrow">01 — TEXT TRANSFORMER</div><h2>Find your <span class="gradient-text">font vibe.</span></h2><p>Type anything. Turn it into something extraordinary.</p></div>
+          <span class="count-pill">{fontStyles.length} styles to explore</span>
+        </div>
+
+        <div class="transformer">
+          <label for="font-input">YOUR TEXT</label>
+          <div class="input-wrap"><input id="font-input" type="text" maxlength="200" value="Make it aesthetic" placeholder="Type your text here..." /><span class="input-counter" id="char-count">17 / 200</span></div>
+          <div class="filter-row">
+            <div class="search-wrap"><span>⌕</span><input id="font-search" type="search" placeholder="Search font styles..." aria-label="Search font styles" /></div>
+            <div class="filter-chips" id="font-filters">
+              <button class="filter-chip active" data-filter="All">All styles</button>
+              <button class="filter-chip" data-filter="Cursive">Cursive</button>
+              <button class="filter-chip" data-filter="Bold">Bold</button>
+              <button class="filter-chip" data-filter="Gothic">Gothic</button>
+              <button class="filter-chip" data-filter="Cute">Cute</button>
+              <button class="filter-chip" data-filter="Decorative">Decorative</button>
+              <button class="filter-chip" data-filter="Fun">Fun</button>
+            </div>
+          </div>
+          <div class="font-grid" id="font-grid">
+            {fontStyles.map((font) => (
+              <article class="font-card" data-font-card data-name={font.name.toLowerCase()} data-category={font.category}>
+                <div class="font-card-top"><span>{font.name}</span><span class="font-tag">{font.category}</span></div>
+                <div class="font-sample" data-font-sample data-style={font.id}>{font.sample}</div>
+                <button class="copy-button" data-font-copy data-style={font.id}>Copy text <span>↗</span></button>
+              </article>
+            ))}
+          </div>
+          <p class="empty-state" id="font-empty" hidden>No styles found. Try a different search.</p>
+          <div class="section-footnote"><span>✦</span> Copy your favorite style and paste it into Instagram, TikTok, Discord, or anywhere you like.</div>
+        </div>
+      </section>
+
+      <section class="section split-section" id="bio-generator">
+        <div class="section-heading"><div><div class="eyebrow">02 — BIO STUDIO</div><h2>A bio that feels <span class="gradient-text">like you.</span></h2><p>Pick a mood. Find your words. Make it yours.</p></div></div>
+        <div class="generator-layout">
+          <div class="generator-panel">
+            <label for="bio-vibe">CHOOSE YOUR VIBE</label>
+            <div class="vibe-grid" id="bio-vibes">
+              {bioTemplates.map((bio, index) => <button class:list={["vibe-option", index === 0 && "selected"]} data-bio-vibe={bio.vibe}>{bio.vibe}</button>)}
+            </div>
+            <label for="bio-output">YOUR BIO</label>
+            <textarea id="bio-output" rows="5" maxlength="300">{bioTemplates[0].text}</textarea>
+            <div class="textarea-footer"><span id="bio-count">0 characters</span><button class="button button-primary button-small" id="bio-copy">Copy bio ↗</button></div>
+            <button class="button button-secondary full-button" id="bio-regenerate">✧ Surprise me with another bio</button>
+          </div>
+          <div class="generator-aside">
+            <div class="aside-orb">✿</div><h3>Small words.<br /><span class="gradient-text">Big personality.</span></h3><p>Your bio is your little introduction to the world. Keep it simple, make it meaningful, or decorate it with your favorite symbols.</p>
+            <div class="aside-tip"><span>✦</span><div><strong>Little tip</strong><p>Use line breaks and a few symbols to make your bio easier to scan.</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="usernames">
+        <div class="section-heading"><div><div class="eyebrow">03 — USERNAME LAB</div><h2>Your next handle, <span class="gradient-text">unlocked.</span></h2><p>Find a name that fits your online identity.</p></div></div>
+        <div class="username-panel">
+          <label for="username-keyword">ADD A WORD (OPTIONAL)</label>
+          <div class="username-controls"><input id="username-keyword" type="text" maxlength="24" placeholder="Your name, nickname, or favorite word" /><button class="button button-primary" id="generate-usernames">Generate names ✦</button></div>
+          <div class="username-results" id="username-results" aria-live="polite"></div>
+          <p class="small-note">Username availability isn't checked. Try your favorites on your chosen platform.</p>
+        </div>
+      </section>
+
+      <section class="section" id="symbols">
+        <div class="section-heading"><div><div class="eyebrow">04 — THE LITTLE DETAILS</div><h2>Symbols that <span class="gradient-text">say more.</span></h2><p>Copy a symbol, decorate your bio, or combine a few into your own signature.</p></div></div>
+        <div class="symbol-panel">
+          <div class="search-wrap symbol-search"><span>⌕</span><input id="symbol-search" type="search" placeholder="Search or filter symbols..." aria-label="Search symbols" /></div>
+          <div class="symbol-grid" id="symbol-grid">
+            {symbols.map((symbol) => <button class="symbol-button" data-symbol={symbol} aria-label={`Copy symbol ${symbol}`}>{symbol}</button>)}
+          </div>
+          <div class="symbol-status" id="symbol-status" aria-live="polite">Select any symbol to copy it.</div>
+        </div>
+      </section>
+
+      <section class="closing-cta">
+        <div class="cta-decoration cta-left">✧</div><div class="cta-decoration cta-right">♡</div>
+        <div class="eyebrow">YOUR WORLD, YOUR AESTHETIC</div>
+        <h2>A little more you.<br /><span class="gradient-text">A little more glow.</span></h2>
+        <p>Make your words feel personal. Your next favorite style is only a click away.</p>
+        <a href="#fonts" class="button button-primary">Find your style <span>↑</span></a>
+      </section>
+    </main>
+
+    <footer class="footer"><a class="brand footer-brand" href="#"><span class="brand-icon">✳</span><span>bio<span class="brand-accent">glow</span><span class="brand-dot">.</span></span></a><p>Made for your little corner of the internet. ✦</p><div class="footer-links"><a href="#fonts">Fonts</a><a href="#bio-generator">Bios</a><a href="#usernames">Usernames</a><a href="#symbols">Symbols</a></div><small>© {new Date().getFullYear()} BioGlow. Free to use.</small></footer>
+  </body>
 </html>
+
+<script is:inline>
+(() => {
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  const maps = {
+    bold: "𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵",
+    italic: "𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻0123456789",
+    bolditalic: "𝘼𝘽𝘾𝘿𝙀𝙁𝙂𝙃𝙄𝙅𝙆𝙇𝙈𝙉𝙊𝙋𝙌𝙍𝙎𝙏𝙐𝙑𝙒𝙓𝙔𝙕𝙖𝙗𝙘𝙙𝙚𝙛𝙜𝙝𝙞𝙟𝙠𝙡𝙢𝙣𝙤𝙥𝙦𝙧𝙨𝙩𝙪𝙫𝙬𝙭𝙮𝙯0123456789",
+    script: "𝒜ℬ𝒞𝒟ℰℱ𝒢ℋℐ𝒥𝒦ℒℳ𝒩𝒪𝒫𝒬ℛ𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵𝒶𝒷𝒸𝒹ℯ𝒻ℊ𝒽𝒾𝒿𝓀𝓁𝓂𝓃ℴ𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏0123456789",
+    boldscript: "𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃0123456789",
+    gothic: "𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷0123456789",
+    boldgothic: "𝕬𝕭𝕮𝕯𝕰𝕱𝕲𝕳𝕴𝕵𝕶𝕷𝕸𝕹𝕺𝕻𝕼𝕽𝕾𝕿𝖀𝖁𝖂𝖃𝖄𝖅𝖆𝖇𝖈𝖉𝖊𝖋𝖌𝖍𝖎𝖏𝖐𝖑𝖒𝖓𝖔𝖕𝖖𝖗𝖘𝖙𝖚𝖛𝖜𝖝𝖞𝖟0123456789",
+    double: "𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡",
+    mono: "𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣𝟶𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿",
+    sans: "𝖠𝖡𝖢𝖣𝖤𝖥𝖦𝖧𝖨𝖩𝖪𝖫𝖬𝖭𝖮𝖯𝖰𝖱𝖲𝖳𝖴𝖵𝖶𝖷𝖸𝖹𝖺𝖻𝖼𝖽𝖾𝖿𝗀𝗁𝗂𝗃𝗄𝗅𝗆𝗇𝗈𝗉𝗊𝗋𝗌𝗍𝗎𝗏𝗐𝗑𝗒𝗓0123456789",
+    sansbold: "𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵",
+    sansitalic: "𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻0123456789",
+    fullwidth: "ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ０１２３４５６７８９"
+  };
+
+  const mapCharacters = (text, style) => {
+    const source = Array.from(alphabet);
+    const target = Array.from(maps[style] || "");
+    const lookup = new Map(source.map((char, index) => [char, target[index]]));
+    return Array.from(text).map(char => lookup.get(char) || char).join("");
+  };
+
+  const smallCapsMap = {
+    a:"ᴀ",b:"ʙ",c:"ᴄ",d:"ᴅ",e:"ᴇ",f:"ꜰ",g:"ɢ",h:"ʜ",i:"ɪ",j:"ᴊ",k:"ᴋ",l:"ʟ",m:"ᴍ",n:"ɴ",o:"ᴏ",p:"ᴘ",q:"ǫ",r:"ʀ",s:"s",t:"ᴛ",u:"ᴜ",v:"ᴠ",w:"ᴡ",x:"x",y:"ʏ",z:"ᴢ"
+  };
+
+  const upsideMap = {
+    a:"ɐ",b:"q",c:"ɔ",d:"p",e:"ǝ",f:"ɟ",g:"ƃ",h:"ɥ",i:"ᴉ",j:"ɾ",k:"ʞ",l:"l",m:"ɯ",n:"u",o:"o",p:"d",q:"b",r:"ɹ",s:"s",t:"ʇ",u:"n",v:"ʌ",w:"ʍ",x:"x",y:"ʎ",z:"z",
+    A:"∀",B:"𐐒",C:"Ɔ",D:"◖",E:"Ǝ",F:"Ⅎ",G:"פ",H:"H",I:"I",J:"ſ",K:"⋊",L:"˥",M:"W",N:"N",O:"O",P:"Ԁ",Q:"Ό",R:"ᴚ",S:"S",T:"⊥",U:"∩",V:"Λ",W:"M",X:"X",Y:"⅄",Z:"Z",
+    ".":"˙",",":"'", "?":"¿", "!":"¡", "'":",", "(" : ")", ")" : "(", "[" : "]", "]" : "["
+  };
+
+  const specialTransform = (text, style) => {
+    if (style === "smallcaps") return Array.from(text).map(c => smallCapsMap[c.toLowerCase()] || c).join("");
+    if (style === "superscript") {
+      const m = {"0":"⁰","1":"¹","2":"²","3":"³","4":"⁴","5":"⁵","6":"⁶","7":"⁷","8":"⁸","9":"⁹","+":"⁺","-":"⁻","=":"⁼","(":"⁽",")":"⁾","n":"ⁿ","i":"ⁱ","a":"ᵃ","b":"ᵇ","c":"ᶜ","d":"ᵈ","e":"ᵉ","h":"ʰ","k":"ᵏ","m":"ᵐ","o":"ᵒ","p":"ᵖ","r":"ʳ","s":"ˢ","t":"ᵗ","u":"ᵘ","v":"ᵛ","x":"ˣ"};
+      return Array.from(text).map(c => m[c] || m[c.toLowerCase()] || c).join("");
+    }
+    if (style === "subscript") {
+      const m = {"0":"₀","1":"₁","2":"₂","3":"₃","4":"₄","5":"₅","6":"₆","7":"₇","8":"₈","9":"₉","+":"₊","-":"₋","=":"₌","(":"₍",")":"₎","a":"ₐ","e":"ₑ","h":"ₕ","i":"ᵢ","j":"ⱼ","k":"ₖ","l":"ₗ","m":"ₘ","n":"ₙ","o":"ₒ","p":"ₚ","r":"ᵣ","s":"ₛ","t":"ₜ","u":"ᵤ","v":"ᵥ","x":"ₓ"};
+      return Array.from(text).map(c => m[c] || c).join("");
+    }
+    if (style === "circled" || style === "bubble") {
+      return Array.from(text).map(c => {
+        const n = c.codePointAt(0);
+        if (n >= 65 && n <= 90) return String.fromCodePoint(0x24B6 + n - 65);
+        if (n >= 97 && n <= 122) return String.fromCodePoint(0x24D0 + n - 97);
+        if (n >= 48 && n <= 57) return ["⓪","①","②","③","④","⑤","⑥","⑦","⑧","⑨"][Number(c)];
+        return c;
+      }).join("");
+    }
+    if (style === "negative") {
+      return Array.from(text).map(c => {
+        const n = c.codePointAt(0);
+        if (n >= 65 && n <= 90) return String.fromCodePoint(0x1F150 + n - 65);
+        if (n >= 97 && n <= 122) return String.fromCodePoint(0x1F150 + n - 97);
+        if (n >= 48 && n <= 57) return c;
+        return c;
+      }).join("");
+    }
+    if (style === "squared") {
+      const m = {"A":"🄰","B":"🄱","C":"🄲","D":"🄳","E":"🄴","F":"🄵","G":"🄶","H":"🄷","I":"🄸","J":"🄹","K":"🄺","L":"🄻","M":"🄼","N":"🄽","O":"🄾","P":"🄿","Q":"🅀","R":"🅁","S":"🅂","T":"🅃","U":"🅄","V":"🅅","W":"🅆","X":"🅇","Y":"🅈","Z":"🅉"};
+      return Array.from(text).map(c => m[c.toUpperCase()] || c).join("");
+    }
+    if (style === "reverse") return Array.from(text).reverse().join("");
+    if (style === "upside") return Array.from(text).reverse().map(c => upsideMap[c] || c).join("");
+    if (style === "underline") return Array.from(text).map(c => c === " " ? c : c + "\u0332").join("");
+    if (style === "strike") return Array.from(text).map(c => c === " " ? c : c + "\u0336").join("");
+    if (style === "doubleline") return Array.from(text).map(c => c === " " ? c : c + "\u0333").join("");
+    if (style === "wide") return Array.from(text).join(" ");
+    if (style === "hearts") return "♡ " + text + " ♡";
+    if (style === "stars") return "✦ " + text + " ✦";
+    if (style === "brackets") return "『 " + text + " 』";
+    if (style === "flower") return "❀ " + text + " ❀";
+    if (style === "sparkle") return "✧･ﾟ " + text + " ﾟ･✧";
+    if (style === "arrow") return "➳ " + text + " ➳";
+    return text;
+  };
+
+  const transform = (text, style) => {
+    if (maps[style]) return mapCharacters(text, style);
+    return specialTransform(text, style);
+  };
+
+  const fontInput = $("#font-input");
+  const fontSearch = $("#font-search");
+  const fontCards = $$("[data-font-card]");
+  const fontEmpty = $("#font-empty");
+  let activeFilter = "All";
+
+  const updateFonts = () => {
+    const value = fontInput.value;
+    $("#char-count").textContent = `${value.length} / 200`;
+    const query = fontSearch.value.trim().toLowerCase();
+    let visible = 0;
+
+    fontCards.forEach(card => {
+      const matchesQuery = card.dataset.name.includes(query) || card.dataset.category.toLowerCase().includes(query);
+      const matchesFilter = activeFilter === "All" || card.dataset.category === activeFilter;
+      const show = matchesQuery && matchesFilter;
+      card.hidden = !show;
+      if (show) visible++;
+      const sample = $("[data-font-sample]", card);
+      sample.textContent = transform(value || "Your text", sample.dataset.style);
+    });
+
+    fontEmpty.hidden = visible !== 0;
+  };
+
+  fontInput.addEventListener("input", updateFonts);
+  fontSearch.addEventListener("input", updateFonts);
+
+  $$("#font-filters button").forEach(button => {
+    button.addEventListener("click", () => {
+      activeFilter = button.dataset.filter;
+      $$("#font-filters button").forEach(item => item.classList.toggle("active", item === button));
+      updateFonts();
+    });
+  });
+
+  const copy = async (text, statusElement, message = "Copied to clipboard!") => {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const area = document.createElement("textarea");
+        area.value = text;
+        area.style.position = "fixed";
+        area.style.opacity = "0";
+        document.body.appendChild(area);
+        area.select();
+        const successful = document.execCommand("copy");
+        area.remove();
+        if (!successful) throw new Error("Copy failed");
+      }
+      if (statusElement) {
+        statusElement.textContent = message;
+        statusElement.classList.add("success");
+      }
+    } catch {
+      if (statusElement) statusElement.textContent = "Copy failed. Please select and copy the text manually.";
+    }
+  };
+
+  fontCards.forEach(card => {
+    $("[data-font-copy]", card).addEventListener("click", () => {
+      const style = $("[data-font-copy]", card).dataset.style;
+      const text = transform(fontInput.value || "Your text", style);
+      copy(text, null);
+      const button = $("[data-font-copy]", card);
+      const original = button.innerHTML;
+      button.innerHTML = "Copied ✓";
+      setTimeout(() => button.innerHTML = original, 1300);
+    });
+  });
+
+  const bioData = [
+    { vibe: "Aesthetic", text: ["✧ creating my own sunshine ✧\n♡ living in little moments\n☾ dreamer by nature", "𓂃 finding beauty in the ordinary\n♡ soft heart, wild mind\n✧ just being me"] },
+    { vibe: "Minimal", text: ["less noise, more meaning.\ncreating my own path.", "simply becoming.\n✦ one day at a time."] },
+    { vibe: "Cute", text: ["୨୧ just a little daydreamer\n♡ made of stardust & feelings\n✿ stay soft", "꒰ა sweet soul ໒꒱\n♡ spreading tiny joys\n✧ be kind"] },
+    { vibe: "Mysterious", text: ["☾ somewhere between dreams & reality\n𓆩♡𓆪 not for everyone", "silent moves, loud dreams.\n☽ you know my name, not my story."] },
+    { vibe: "Confident", text: ["not here to fit in.\n✦ building my own universe.", "my energy speaks first.\n♛ made to be different."] },
+    { vibe: "Romantic", text: ["♡ collecting moments, not things\n☾ a heart full of poetry", "love in the little things.\n❥ romanticizing this life."] },
+    { vibe: "Creator", text: ["✦ creating • learning • growing\n📩 collaborations: DM", "ideas into reality.\n✧ sharing what I create."] },
+    { vibe: "Funny", text: ["professional overthinker\n☕ powered by caffeine & chaos", "currently buffering...\n✦ personality loading."] }
+  ];
+
+  let selectedVibe = "Aesthetic";
+  let bioIndex = 0;
+  const bioOutput = $("#bio-output");
+
+  const updateBioCount = () => $("#bio-count").textContent = `${bioOutput.value.length} characters`;
+
+  $$("#bio-vibes button").forEach(button => {
+    button.addEventListener("click", () => {
+      selectedVibe = button.dataset.bioVibe;
+      bioIndex = 0;
+      $$("#bio-vibes button").forEach(item => item.classList.toggle("selected", item === button));
+      const data = bioData.find(item => item.vibe === selectedVibe);
+      bioOutput.value = data ? data.text[0] : "";
+      updateBioCount();
+    });
+  });
+
+  bioOutput.addEventListener("input", updateBioCount);
+
+  $("#bio-copy").addEventListener("click", () => copy(bioOutput.value, $("#bio-count"), "Bio copied!"));
+
+  $("#bio-regenerate").addEventListener("click", () => {
+    const data = bioData.find(item => item.vibe === selectedVibe);
+    if (!data) return;
+    bioIndex = (bioIndex + 1) % data.text.length;
+    bioOutput.value = data.text[bioIndex];
+    updateBioCount();
+  });
+
+  const usernameResults = $("#username-results");
+  const random = array => array[Math.floor(Math.random() * array.length)];
+  const usernameWords = ["luna","nova","echo","aura","velvet","cloud","dream","moon","rose","cosmic","blush","star","mist","dusk","pixel","honey","angel","frost","lilac","glow","onyx","bloom","muse","soft","wild","zen","orbit","sol"];
+
+  const generateUsernames = () => {
+    const keyword = $("#username-keyword").value.trim().toLowerCase().replace(/[^a-z0-9_]/g, "");
+    const words = ["luna","nova","echo","aura","velvet","cloud","dream","moon","rose","cosmic","blush","star","mist","dusk","pixel","honey","angel","frost","lilac","glow","onyx","bloom","muse","soft","wild","zen","orbit","sol"];
+    const patterns = [
+      () => `${keyword || random(words)}.${random(words)}`,
+      () => `its${keyword || random(words)}`,
+      () => `${keyword || random(words)}_diary`,
+      () => `${random(words)}.${keyword || random(words)}`,
+      () => `${keyword || random(words)}x${random(words)}`,
+      () => `the.${keyword || random(words)}`,
+      () => `${keyword || random(words)}.jpg`,
+      () => `${random(words)}_${keyword || random(words)}`,
+      () => `not${keyword || random(words)}`,
+      () => `${keyword || random(words)}.era`,
+      () => `hey${keyword || random(words)}`,
+      () => `${keyword || random(words)}.archive`
+    ];
+
+    const names = new Set();
+    while (names.size < 8) names.add(random(patterns)());
+    usernameResults.innerHTML = "";
+
+    names.forEach(name => {
+      const row = document.createElement("div");
+      row.className = "username-result";
+      const text = document.createElement("span");
+      text.textContent = "@" + name;
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = "Copy ↗";
+      button.addEventListener("click", () => copy(name, null));
+      row.append(text, button);
+      usernameResults.appendChild(row);
+    });
+  };
+
+  $("#generate-usernames").addEventListener("click", generateUsernames);
+
+  const symbolGrid = $("#symbol-grid");
+  const symbolButtons = $$(".symbol-button", symbolGrid);
+  const symbolSearch = $("#symbol-search");
+  const symbolStatus = $("#symbol-status");
+
+  symbolButtons.forEach(button => {
+    button.addEventListener("click", () => copy(button.dataset.symbol, symbolStatus, `Copied ${button.dataset.symbol}`));
+  });
+
+  symbolSearch.addEventListener("input", () => {
+    const query = symbolSearch.value.trim().toLowerCase();
+    symbolButtons.forEach(button => {
+      button.hidden = !button.dataset.symbol.toLowerCase().includes(query);
+    });
+    const count = symbolButtons.filter(button => !button.hidden).length;
+    symbolStatus.textContent = count ? "Select any symbol to copy it." : "No symbols found.";
+    symbolStatus.classList.remove("success");
+  });
+
+  updateFonts();
+  updateBioCount();
+  generateUsernames();
+})();
+</script>
+
+<style>
+:root{color-scheme:dark;--bg:#10091c;--panel:#191126;--panel2:#20152f;--line:rgba(222,198,255,.12);--muted:#a99bb9;--text:#f8f3ff;--pink:#f0a4ef;--purple:#b79aff;--glow:rgba(171,113,255,.18)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
+.ambient{position:absolute;pointer-events:none;z-index:-1;filter:blur(90px);border-radius:50%;opacity:.3}
+.ambient-one{width:440px;height:440px;background:#7136bd;top:100px;left:-240px}
+.ambient-two{width:400px;height:400px;background:#b93f9b;top:400px;right:-250px}
+.topbar{height:82px;max-width:1240px;margin:auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);position:relative;z-index:5}
+.brand{display:inline-flex;align-items:center;gap:9px;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:24px;letter-spacing:-1.2px}
+.brand-icon{display:grid;place-items:center;width:33px;height:33px;border-radius:11px;background:linear-gradient(135deg,#d6a4ff,#ed9ddd);color:#241032;font-size:22px}
+.brand-accent{color:var(--pink)}.brand-dot{color:#c9a5ff}
+.nav-links{display:flex;gap:29px;color:#c6b9d3;font-size:13px}.nav-links a:hover,.footer-links a:hover{color:var(--pink)}
+.nav-cta{padding:10px 15px;border:1px solid var(--line);border-radius:11px;font-size:12px;font-weight:700;background:rgba(255,255,255,.025)}.nav-cta span{color:var(--pink);margin-left:5px}
+.hero{max-width:1240px;margin:auto;padding:105px 28px 96px;display:grid;grid-template-columns:1.03fr .97fr;gap:45px;align-items:center;min-height:570px}
+.eyebrow{font-size:10px;letter-spacing:2.3px;font-weight:800;color:#d0b6fa;text-transform:uppercase;display:flex;align-items:center;gap:9px}
+.pulse-dot{width:7px;height:7px;background:#e5a2e7;border-radius:50%;box-shadow:0 0 15px #dc7be6}
+h1,h2,h3,p{margin-top:0}
+h1,h2,h3{font-family:"Space Grotesk",sans-serif;letter-spacing:-1.8px}
+h1{font-size:clamp(48px,6vw,75px);line-height:1.06;margin:23px 0 22px;font-weight:700}
+.gradient-text{background:linear-gradient(100deg,#f2b2ec 5%,#c4a5ff 53%,#a4c2ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-description{max-width:475px;font-size:16px;line-height:1.9;color:#b7a9c5}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.button{display:inline-flex;align-items:center;justify-content:center;gap:12px;border:1px solid transparent;border-radius:11px;padding:13px 18px;font-size:12px;font-weight:800;transition:transform .2s,box-shadow .2s,background .2s}
+.button:hover{transform:translateY(-2px)}
+.button-primary{background:linear-gradient(115deg,#d9a3ff,#f2a7dc);color:#21102e;box-shadow:0 8px 28px rgba(204,133,237,.14)}
+.button-primary:hover{box-shadow:0 10px 32px rgba(204,133,237,.28)}
+.button-secondary{border-color:var(--line);background:rgba(255,255,255,.025);color:#f1e8ff}
+.hero-trust{margin-top:24px;font-size:11px;color:#a99bb8}.trust-icon{color:var(--pink)}.trust-separator{padding:0 7px;color:#6f5c83}
+.hero-visual{min-height:430px;position:relative;display:grid;place-items:center}
+.orbit{position:absolute;border:1px solid rgba(211,165,255,.16);border-radius:50%;transform:rotate(-22deg)}
+.orbit-one{width:440px;height:285px}.orbit-two{width:380px;height:350px;transform:rotate(34deg)}
+.profile-card{width:285px;border:1px solid rgba(240,213,255,.2);border-radius:20px;overflow:hidden;background:rgba(25,17,38,.95);box-shadow:0 25px 90px rgba(0,0,0,.38),0 0 55px rgba(181,112,255,.12);position:relative;z-index:1;transform:rotate(2deg)}
+.profile-cover{height:113px;position:relative;overflow:hidden;background:radial-gradient(circle at 70% 35%,#9f67d7 0,transparent 24%),radial-gradient(circle at 30% 80%,#c35aab 0,transparent 35%),linear-gradient(130deg,#34214d,#251532 65%,#4d2559)}
+.cover-orb{position:absolute;width:115px;height:115px;border-radius:50%;border:1px solid rgba(255,255,255,.28);right:35px;top:-18px;box-shadow:0 0 0 15px rgba(255,255,255,.025),0 0 0 32px rgba(255,255,255,.02)}
+.cover-star{position:absolute;color:#fff0ff}.star-one{top:22px;left:42px;font-size:22px}.star-two{right:37px;bottom:18px;font-size:28px}
+.cover-caption{position:absolute;bottom:12px;left:15px;font-size:7px;letter-spacing:2px;color:#f0d6ff}
+.profile-body{padding:0 19px 19px;text-align:center}
+.avatar{margin:-28px auto 8px;position:relative;width:57px;height:57px;border-radius:18px;display:grid;place-items:center;font-size:26px;background:linear-gradient(140deg,#f5c0eb,#b99aff);border:4px solid #191126;color:#442550}
+.profile-name{font-weight:800;font-size:15px}.verified{color:#d5a6ff;font-size:12px}.profile-handle{font-size:10px;color:#9384a7}
+.profile-bio{font-size:11px;color:#d3c2e4;margin:15px 0;line-height:1.9}
+.profile-stats{display:flex;justify-content:space-around;border-top:1px solid var(--line);padding-top:13px}.profile-stats div{display:flex;flex-direction:column}.profile-stats strong{font-size:12px}.profile-stats span{font-size:9px;color:#9f8eaf}
+.profile-button{margin-top:14px;padding:8px;border-radius:8px;background:linear-gradient(100deg,#d6a1fa,#efa2dc);color:#261333;font-size:10px;font-weight:800}
+.floating-note{position:absolute;z-index:2;padding:11px 14px;border:1px solid rgba(225,195,255,.17);background:rgba(29,19,44,.92);border-radius:12px;box-shadow:0 12px 35px #09051266;font-size:10px;color:#d6c6e5}
+.floating-note span{color:var(--pink);margin-right:6px}.note-top{top:45px;right:0}.note-bottom{bottom:35px;left:0}
+.ticker{display:flex;justify-content:space-evenly;gap:20px;flex-wrap:wrap;padding:17px 20px;border-block:1px solid var(--line);background:rgba(255,255,255,.018);font-size:9px;letter-spacing:1.6px;color:#a898bb}
+.ticker span:nth-child(2n){color:#d2a3ed}
+.section{max-width:1240px;margin:auto;padding:92px 28px}
+.section-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:25px;margin-bottom:32px}
+.section-heading h2,.closing-cta h2{font-size:clamp(32px,4vw,47px);line-height:1.16;margin:13px 0 10px}
+.section-heading p{color:var(--muted);font-size:13px;margin-bottom:0}
+.count-pill{white-space:nowrap;border:1px solid var(--line);background:#ffffff05;border-radius:99px;padding:8px 12px;font-size:10px;color:#c7b4db}
+.transformer,.generator-panel,.generator-aside,.username-panel,.symbol-panel{border:1px solid var(--line);background:linear-gradient(145deg,rgba(32,22,47,.92),rgba(21,14,32,.92));border-radius:18px;padding:25px}
+label{display:block;font-size:9px;letter-spacing:1.7px;color:#bba8d1;font-weight:800;margin-bottom:10px}
+.input-wrap{position:relative}
+input,textarea{width:100%;border:1px solid rgba(222,198,255,.14);border-radius:10px;background:#100b19;color:var(--text);padding:14px 15px;outline:none;font-size:13px}
+input:focus,textarea:focus{border-color:#bb8bdf}
+.input-counter{position:absolute;right:13px;top:50%;transform:translateY(-50%);font-size:10px;color:#7f708f}
+.input-wrap input{padding-right:85px}
+.filter-row{display:flex;flex-direction:column;gap:15px;margin:22px 0}
+.search-wrap{display:flex;align-items:center;gap:9px;border:1px solid var(--line);background:#100b19;border-radius:10px;padding:0 12px;color:#d8b1f0}
+.search-wrap input{border:0;background:transparent;padding:12px 0;min-width:0}
+.filter-chips{display:flex;flex-wrap:wrap;gap:8px}
+.filter-chip{border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:transparent;color:#b8a7c8;font-size:10px}
+.filter-chip.active,.filter-chip:hover{background:rgba(200,151,240,.14);border-color:rgba(220,164,247,.4);color:#f4d9ff}
+.font-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.font-card{min-width:0;border:1px solid rgba(222,198,255,.1);border-radius:12px;background:rgba(255,255,255,.018);padding:14px;transition:border-color .2s,transform .2s}
+.font-card:hover{border-color:rgba(222,161,247,.38);transform:translateY(-2px)}
+.font-card[hidden],.symbol-button[hidden]{display:none}
+.font-card-top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:10px;color:#d8cbe6;font-weight:700}
+.font-tag{font-size:8px;font-weight:500;color:#c4a1e8;background:rgba(185,130,226,.11);padding:4px 6px;border-radius:5px}
+.font-sample{min-height:58px;display:flex;align-items:center;overflow-wrap:anywhere;word-break:break-word;font-size:19px;line-height:1.5;padding:12px 0;color:#f7ecff}
+.copy-button{width:100%;display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);background:rgba(255,255,255,.025);color:#cbb8dc;border-radius:8px;padding:9px 10px;font-size:10px}
+.copy-button:hover{border-color:#c58ce5;color:#fff}
+.copy-button span{color:var(--pink)}
+.empty-state{padding:25px;text-align:center;color:var(--muted);font-size:12px}
+.section-footnote{margin-top:19px;color:#a798b8;font-size:10px}.section-footnote span{color:var(--pink);margin-right:6px}
+.split-section{padding-top:45px}
+.generator-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
+.generator-panel label:not(:first-child){margin-top:22px}
+.vibe-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.vibe-option{border:1px solid var(--line);border-radius:8px;padding:9px 5px;background:transparent;color:#b8a8c7;font-size:10px}
+.vibe-option.selected,.vibe-option:hover{border-color:#ce9ce9;background:rgba(195,136,231,.13);color:#f4d7ff}
+textarea{resize:vertical;line-height:1.8}
+.textarea-footer{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;font-size:10px;color:#9585a6}
+.button-small{padding:9px 13px;font-size:10px}
+.full-button{width:100%;margin-top:12px}
+.generator-aside{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:36px;background:radial-gradient(circle at 90% 5%,rgba(177,107,226,.14),transparent 38%),linear-gradient(145deg,#20152e,#171020)}
+.aside-orb{width:56px;height:56px;display:grid;place-items:center;border-radius:17px;background:linear-gradient(140deg,#edb1eb,#b8a0ff);color:#321a43;font-size:26px;margin-bottom:25px;box-shadow:0 0 35px rgba(197,137,241,.15)}
+.generator-aside h3{font-size:31px;line-height:1.2;margin-bottom:14px}
+.generator-aside>p{color:#b5a5c4;font-size:12px;line-height:1.9;max-width:320px}
+.aside-tip{display:flex;gap:12px;margin-top:12px;padding-top:17px;border-top:1px solid var(--line);width:100%}
+.aside-tip>span{color:var(--pink);font-size:20px}.aside-tip strong{font-size:11px}.aside-tip p{font-size:10px;color:#a99ab8;margin:4px 0 0}
+.username-panel{padding:25px}
+.username-controls{display:flex;gap:10px}.username-controls input{flex:1;min-width:0}
+.username-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:20px}
+.username-result{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;padding:12px;border:1px solid var(--line);border-radius:9px;background:#ffffff03}
+.username-result span{overflow-wrap:anywhere;font-size:12px;color:#e3d5f0}
+.username-result button{flex-shrink:0;border:0;background:transparent;color:#e2a8ee;font-size:10px}
+.small-note{font-size:10px;color:#8e7f9d;margin:17px 0 0}
+.symbol-panel{padding:22px}
+.symbol-search{max-width:400px;margin-bottom:20px}
+.symbol-grid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:9px}
+.symbol-button{min-width:0;min-height:51px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.02);font-size:23px;color:#e9d6fb;transition:all .15s}
+.symbol-button:hover{background:rgba(194,137,239,.16);border-color:#c18be2;transform:translateY(-2px)}
+.symbol-status{font-size:10px;color:#9e8dae;margin-top:17px;min-height:16px}
+.symbol-status.success{color:#d6a8f3}
+.closing-cta{position:relative;overflow:hidden;margin:0 28px 75px;padding:68px 20px;text-align:center;border:1px solid rgba(219,166,255,.17);border-radius:22px;background:radial-gradient(ellipse at 50% 100%,rgba(160,84,209,.19),transparent 65%),linear-gradient(130deg,#1c1229,#151020)}
+.closing-cta .eyebrow{justify-content:center}
+.closing-cta h2{margin-top:17px}
+.closing-cta p{font-size:12px;color:#ad9dbd;margin:15px auto 24px;max-width:450px}
+.cta-decoration{position:absolute;color:rgba(226,165,244,.27);font-size:50px}
+.cta-left{top:28px;left:10%}.cta-right{right:11%;bottom:24px}
+.footer{max-width:1240px;margin:auto;padding:25px 28px 35px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.footer-brand{font-size:19px}.footer-brand .brand-icon{width:28px;height:28px;font-size:18px;border-radius:9px}
+.footer>p{margin:0;color:#9383a4;font-size:10px}
+.footer-links{display:flex;gap:17px;font-size:10px;color:#b7a7c5}
+.footer small{width:100%;color:#746582;font-size:9px}
+@media(min-width:1300px){.closing-cta{max-width:1184px;margin-left:auto;margin-right:auto}}
+@media(max-width:900px){.nav-links{gap:14px}.hero{gap:20px;padding-top:75px}.font-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.symbol-grid{grid-template-columns:repeat(8,minmax(0,1fr))}.hero-visual{transform:scale(.9)}}
+@media(max-width:650px){.topbar{height:70px;padding:0 18px}.brand{font-size:22px}.nav-links{display:none}.nav-cta{font-size:10px;padding:9px 11px}.hero{grid-template-columns:1fr;padding:68px 20px 50px;gap:5px}.hero-copy{text-align:center}.hero-copy .eyebrow,.hero-actions{justify-content:center}.hero-description{margin-inline:auto;font-size:14px}.hero-trust{font-size:9px}.hero-visual{min-height:380px;transform:scale(.9);margin:0 -20px}.orbit-one{width:350px}.orbit-two{width:320px}.note-top{right:2px}.note-bottom{left:0}.ticker{justify-content:center;gap:12px 20px;font-size:8px}.ticker span:last-child{display:none}.section{padding:66px 18px}.section-heading{align-items:flex-start;flex-direction:column;gap:14px}.section-heading h2,.closing-cta h2{font-size:34px}.transformer,.generator-panel,.generator-aside,.username-panel,.symbol-panel{padding:16px}.font-grid{grid-template-columns:1fr 1fr;gap:8px}.font-card{padding:11px}.font-sample{font-size:16px;min-height:64px}.font-tag{display:none}.generator-layout{grid-template-columns:1fr}.generator-aside{padding:25px}.vibe-grid{grid-template-columns:repeat(2,1fr)}.username-controls{flex-direction:column}.username-controls .button{width:100%}.username-results{grid-template-columns:1fr}.symbol-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}.symbol-button{min-height:46px}.closing-cta{margin:0 18px 45px;padding:55px 18px}.cta-left{left:5%}.cta-right{right:5%}.footer{padding:25px 18px;justify-content:center;text-align:center}.footer-brand{width:100%;justify-content:center}.footer-links{justify-content:center;flex-wrap:wrap}.footer>p{width:100%}}
+@media(max-width:360px){.font-grid{grid-template-columns:1fr}.hero-actions .button{width:100%}.profile-card{width:265px}.hero-visual{transform:scale(.82);min-height:340px}}
+</style>
